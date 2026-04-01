@@ -11,9 +11,14 @@ import com.clinicapi.exception.BusinessException;
 import com.clinicapi.exception.ResourceNotFoundException;
 import com.clinicapi.repository.RoleRepository;
 import com.clinicapi.repository.UserRepository;
+import com.clinicapi.security.JwtService;
 import com.clinicapi.service.AuthService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -21,15 +26,18 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     public AuthServiceImpl(
             UserRepository userRepository,
             RoleRepository roleRepository,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            JwtService jwtService
     ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -52,18 +60,21 @@ public class AuthServiceImpl implements AuthService {
 
         User savedUser = userRepository.save(user);
 
+        UserDetails userDetails = buildUserDetails(savedUser);
+        String token = jwtService.generateToken(userDetails);
+
         return new AuthResponse(
                 savedUser.getId(),
                 savedUser.getFullName(),
                 savedUser.getEmail(),
-                "JWT_TOKEN_WILL_BE_ADDED_LATER"
+                token
         );
     }
 
     @Override
     public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new ResourceNotFoundException("Invalid email or password"));
+                .orElseThrow(() -> new BusinessException("Invalid email or password"));
 
         boolean passwordMatches = passwordEncoder.matches(request.getPassword(), user.getPassword());
 
@@ -75,11 +86,28 @@ public class AuthServiceImpl implements AuthService {
             throw new BusinessException("User is inactive");
         }
 
+        UserDetails userDetails = buildUserDetails(user);
+        String token = jwtService.generateToken(userDetails);
+
         return new AuthResponse(
                 user.getId(),
                 user.getFullName(),
                 user.getEmail(),
-                "JWT_TOKEN_WILL_BE_ADDED_LATER"
+                token
+        );
+    }
+
+    private UserDetails buildUserDetails(User user) {
+        Set<org.springframework.security.core.authority.SimpleGrantedAuthority> authorities =
+                user.getRoles()
+                        .stream()
+                        .map(role -> new org.springframework.security.core.authority.SimpleGrantedAuthority(role.getName().name()))
+                        .collect(Collectors.toSet());
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                user.getPassword(),
+                authorities
         );
     }
 }
