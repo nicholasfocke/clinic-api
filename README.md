@@ -78,6 +78,33 @@ The following features are currently being implemented:
 
 ---
 
+## Authentication
+
+The API uses JWT (JSON Web Token) for authentication.
+
+#### Flow:
+
+1. Register a new user:
+   `POST /api/v1/auth/register`
+
+2. Login:
+   `POST /api/v1/auth/login`
+
+3. Use the returned token in the `Authorization` header:
+   `Authorization: Bearer <your_token>`
+
+#### Example Login Response
+```json
+{
+  "userId": 1,
+  "fullName": "Nicholas Focke",
+  "email": "nicholas@example.com",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+---
+
 ## Environment Profiles
 
 The application uses multiple configuration profiles:
@@ -128,21 +155,10 @@ http://localhost:8080/swagger-ui.html
 
 ---
 
-## Next Steps
-
-- [ ] Implement JWT-based authentication
-- [ ] Secure endpoints with Spring Security
-- [ ] Add core domain modules: Doctors, Patients, Appointments
-- [ ] Add filtering and advanced queries
-- [ ] Add Docker support
-- [ ] Deploy to cloud (AWS)
-
----
-
 ## Author
 
 **Nicholas Focke**
-[GitHub](https://github.com/nicholasfocke) · [LinkedIn](www.linkedin.com/in/nicholas-focke-833049269)
+[GitHub](https://github.com/nicholasfocke) · [LinkedIn](https://www.linkedin.com/in/nicholas-focke-833049269)
 
 ---
 
