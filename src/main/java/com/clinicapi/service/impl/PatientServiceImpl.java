@@ -12,7 +12,9 @@ import com.clinicapi.repository.PatientRepository;
 import com.clinicapi.service.PatientService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository patientRepository;
