@@ -5,15 +5,15 @@ import java.util.List;
 
 public class ErrorResponse {
 
-    private final LocalDateTime timeStamp;
+    private final LocalDateTime timestamp;
     private final Integer status;
     private final String error;
     private final String message;
     private final String path;
     private final List<String> details;
 
-    public ErrorResponse(LocalDateTime timeStamp, Integer status, String error, String message, String path, List<String> details) {
-        this.timeStamp = timeStamp;
+    public ErrorResponse(LocalDateTime timestamp, Integer status, String error, String message, String path, List<String> details) {
+        this.timestamp = timestamp;
         this.status = status;
         this.error = error;
         this.message = message;
@@ -21,8 +21,8 @@ public class ErrorResponse {
         this.details = details;
     }
 
-    public LocalDateTime getTimeStamp() {
-        return timeStamp;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
     public Integer getStatus() {
