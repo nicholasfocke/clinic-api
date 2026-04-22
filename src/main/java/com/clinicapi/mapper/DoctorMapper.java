@@ -5,8 +5,6 @@ import com.clinicapi.dto.response.DoctorResponse;
 import com.clinicapi.entity.Doctor;
 import org.springframework.stereotype.Component;
 
-import javax.print.Doc;
-
 @Component
 public class DoctorMapper {
     public Doctor toEntity(DoctorRequest request){
