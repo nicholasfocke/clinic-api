@@ -12,7 +12,7 @@ public class Doctor extends BaseEntity{
     private String fullName;
 
     @Column(nullable = false, length = 100)
-    private String speciality;
+    private String specialty;
 
     @Column(nullable = false, unique = true, length = 30)
     private String crm;
@@ -29,9 +29,9 @@ public class Doctor extends BaseEntity{
     public Doctor(){
     }
 
-    public Doctor(String fullName, String speciality, String crm, String email, String phone, boolean active) {
+    public Doctor(String fullName, String specialty, String crm, String email, String phone, boolean active) {
         this.fullName = fullName;
-        this.speciality = speciality;
+        this.specialty = specialty;
         this.crm = crm;
         this.email = email;
         this.phone = phone;
@@ -78,11 +78,11 @@ public class Doctor extends BaseEntity{
         this.phone = phone;
     }
 
-    public String getSpeciality() {
-        return speciality;
+    public String getSpecialty() {
+        return specialty;
     }
 
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
     }
 }

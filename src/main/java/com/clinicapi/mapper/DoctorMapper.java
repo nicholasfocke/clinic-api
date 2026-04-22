@@ -10,7 +10,7 @@ public class DoctorMapper {
     public Doctor toEntity(DoctorRequest request){
         return new Doctor(
                 request.getFullName(),
-                request.getSpeciality(),
+                request.getSpecialty(),
                 request.getCrm(),
                 request.getEmail(),
                 request.getPhone(),
@@ -22,7 +22,7 @@ public class DoctorMapper {
         return new DoctorResponse(
                 doctor.getId(),
                 doctor.getFullName(),
-                doctor.getSpeciality(),
+                doctor.getSpecialty(),
                 doctor.getCrm(),
                 doctor.getEmail(),
                 doctor.getPhone(),

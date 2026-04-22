@@ -10,9 +10,9 @@ public class DoctorRequest {
     @Size(max = 150, message = "Full name must have at most 150 characters")
     private String fullName;
 
-    @NotBlank(message = "Speciality is required")
-    @Size(max = 100, message = "Speciality must have at most 100 characters")
-    private String speciality;
+    @NotBlank(message = "Specialty is required")
+    @Size(max = 100, message = "Specialty must have at most 100 characters")
+    private String specialty;
 
     @NotBlank(message = "CRM is required")
     @Size(max = 30, message = "CRM must have at most 30 characters")
@@ -62,11 +62,11 @@ public class DoctorRequest {
         this.phone = phone;
     }
 
-    public String getSpeciality() {
-        return speciality;
+    public String getSpecialty() {
+        return specialty;
     }
 
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
     }
 }
